@@ -8,6 +8,33 @@ var app  = new Framework7({
   name: 'Framework7', // App name
   theme: 'auto', // Automatic theme detection
   // App root data
+
+  on: {
+    pageInit: function (page) {
+      if (localStorage.getItem("darktheme") == 1) {
+        $$('body').addClass('theme-dark color-theme-red');
+        $$('.darktheme-toggle input').prop({checked: true});
+      }
+
+      var toggle = app.toggle.create({
+        el: '.darktheme-toggle',
+        on: {
+          change: function () {
+            if (toggle.checked) {
+              localStorage.setItem("darktheme", "1");
+              $$('body').addClass('theme-dark color-theme-red');
+            } else {
+              localStorage.removeItem("darktheme");
+              $$('body').removeClass('theme-dark color-theme-red')
+            }
+          }
+        }
+      });
+    },
+    popupOpen: function (popup) {
+    },
+  },
+
   data: function () {
     return {
       user: {
